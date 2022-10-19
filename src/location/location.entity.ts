@@ -1,9 +1,9 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity()
+@Entity('locations')
 @ObjectType()
-export class LocationEntity {
+export class Location {
   @PrimaryGeneratedColumn()
   @Field(() => Int)
   id: number;

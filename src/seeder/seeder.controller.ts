@@ -15,4 +15,12 @@ export class SeederController {
   async seedLocations(): Promise<ApiResponseInterface> {
     return await this.seederService.seedLocations();
   }
+
+  /**
+   * Seed itineraries
+   */
+  @Post('/seed-itineraries')
+  async seedItinerary(): Promise<any> {
+    return await this.seederService.seedItinerary();
+  }
 }

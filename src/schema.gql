@@ -2,11 +2,11 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type LocationEntity {
+type Location {
   id: Int!
   name: String!
 }
 
 type Query {
-  locations: [LocationEntity!]!
+  locations: [Location!]!
 }

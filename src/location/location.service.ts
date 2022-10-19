@@ -2,19 +2,19 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateLocationDto } from './dto/createLocation.dto';
-import { LocationEntity } from './location.entity';
+import { Location } from './location.entity';
 
 @Injectable()
 export class LocationService {
   constructor(
-    @InjectRepository(LocationEntity)
-    private locationRepository: Repository<LocationEntity>,
+    @InjectRepository(Location)
+    private locationRepository: Repository<Location>,
   ) {}
 
   /**
    * Get all locations
    */
-  async findAll(): Promise<LocationEntity[]> {
+  async findAll(): Promise<Location[]> {
     try {
       return await this.locationRepository.find();
     } catch (error) {
@@ -27,7 +27,7 @@ export class LocationService {
    */
   async createLocation(
     createLocationDto: CreateLocationDto,
-  ): Promise<LocationEntity> {
+  ): Promise<Location> {
     try {
       const location = this.locationRepository.create(createLocationDto);
       return await this.locationRepository.save(location);

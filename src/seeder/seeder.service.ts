@@ -1,15 +1,29 @@
-import { Injectable, NotImplementedException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotImplementedException,
+} from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 import { InjectRepository } from '@nestjs/typeorm';
+import { format } from 'date-fns';
+import { Model } from 'mongoose';
 import { Repository } from 'typeorm';
 import { ApiResponseInterface } from '../interfaces/api-response.interface';
-import { LocationEntity } from '../location/location.entity';
+import { Itinerary } from '../itinerary/itinerary.entity';
+import { ItineraryDocument } from '../itinerary/schemas/itinerary.schema';
+import { Location } from '../location/location.entity';
 import { locationData } from './data/location-data';
 
 @Injectable()
 export class SeederService {
   constructor(
-    @InjectRepository(LocationEntity)
-    private locationRepository: Repository<LocationEntity>,
+    @InjectRepository(Location)
+    private locationRepository: Repository<Location>,
+    @InjectRepository(Itinerary)
+    private itineraryRepository: Repository<Itinerary>,
+
+    @InjectModel(Itinerary.name)
+    private itineraryModel: Model<ItineraryDocument>,
   ) {}
 
   /**
@@ -20,7 +34,7 @@ export class SeederService {
       await this.locationRepository
         .createQueryBuilder()
         .insert()
-        .into(LocationEntity)
+        .into(Location)
         .values(await locationData())
         .execute();
 
@@ -29,6 +43,63 @@ export class SeederService {
         message: 'All locations data was inserted into db',
       };
     } catch (error) {
+      if (error?.code === 'SQLITE_CONSTRAINT') {
+        throw new ConflictException('Conflict: Data already exists');
+      }
+      throw new NotImplementedException(error);
+    }
+  }
+
+  /**
+   * Itineraries
+   */
+  async seedItinerary(): Promise<ApiResponseInterface> {
+    try {
+      const itineraries = await this.itineraryModel.find();
+
+      const data = [];
+      itineraries.map((itinerary) => {
+        const item = {
+          carrier: itinerary.carrier,
+          departureLocation: itinerary.departureLocation,
+          arrivalLocation: itinerary.arrivalLocation,
+          price: itinerary.price,
+          arrivalDate: format(
+            new Date(
+              itinerary.arrivalDate.year,
+              itinerary.arrivalDate.month,
+              itinerary.arrivalDate.dayOfMonth,
+            ),
+            'yyyy-MM-dd',
+          ),
+          departureDate: format(
+            new Date(
+              itinerary.departureDate.year,
+              itinerary.departureDate.month,
+              itinerary.departureDate.dayOfMonth,
+            ),
+            'yyyy-MM-dd',
+          ),
+        };
+        data.push(item);
+      });
+
+      await this.itineraryRepository
+        .createQueryBuilder()
+        .insert()
+        .into(Itinerary)
+        .values(data)
+        .execute();
+
+      return {
+        success: true,
+        message: 'All locations data was inserted into db',
+        meta: data,
+      };
+    } catch (error) {
+      if (error?.code === 'SQLITE_CONSTRAINT') {
+        throw new ConflictException('Conflict: Data already exists');
+      }
       throw new NotImplementedException(error);
     }
   }

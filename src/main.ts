@@ -1,4 +1,4 @@
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as morgan from 'morgan';
@@ -12,12 +12,10 @@ async function bootstrap() {
   const logger = new Logger();
 
   // middlewares
-  app.useStaticAssets(join(__dirname, '..', 'public'));
   app.enableCors();
-
-  // app.setGlobalPrefix('api');
-  // app.useGlobalPipes(new ValidationPipe({ transform: true }));
-
+  app.useStaticAssets(join(__dirname, '..', 'public'));
+  app.setGlobalPrefix('api');
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.use(morgan('combined'));
   useSwagger(app);
 

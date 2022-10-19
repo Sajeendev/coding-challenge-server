@@ -1,16 +1,16 @@
 import { Query, Resolver } from '@nestjs/graphql';
-import { LocationEntity } from './location.entity';
+import { Location } from './location.entity';
 import { LocationService } from './location.service';
 
-@Resolver(() => LocationEntity)
+@Resolver(() => Location)
 export class LocationResolver {
   constructor(private locationService: LocationService) {}
 
   /**
    * Query
    */
-  @Query(() => [LocationEntity])
-  async locations(): Promise<LocationEntity[]> {
+  @Query(() => [Location])
+  async locations(): Promise<Location[]> {
     return await this.locationService.findAll();
   }
 }
