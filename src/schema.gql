@@ -10,11 +10,3 @@ type LocationEntity {
 type Query {
   locations: [LocationEntity!]!
 }
-
-type Mutation {
-  createLocation(createLocationDto: CreateLocationDto!): LocationEntity!
-}
-
-input CreateLocationDto {
-  name: String!
-}

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateLocationDto } from './dto/createLocation.dto';
@@ -18,7 +18,7 @@ export class LocationService {
     try {
       return await this.locationRepository.find();
     } catch (error) {
-      console.log(error);
+      throw new InternalServerErrorException('Something went wrong');
     }
   }
 
@@ -32,7 +32,7 @@ export class LocationService {
       const location = this.locationRepository.create(createLocationDto);
       return await this.locationRepository.save(location);
     } catch (error) {
-      console.log(error);
+      throw new InternalServerErrorException('Something went wrong');
     }
   }
 }
