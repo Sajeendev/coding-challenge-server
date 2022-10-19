@@ -12,6 +12,7 @@ import { ApiResponseInterface } from '../interfaces/api-response.interface';
 import { Itinerary } from '../itinerary/itinerary.entity';
 import { ItineraryDocument } from '../itinerary/schemas/itinerary.schema';
 import { Location } from '../location/location.entity';
+import { itineraryData } from './data/itinerary-data';
 import { locationData } from './data/location-data';
 
 @Injectable()
@@ -54,7 +55,31 @@ export class SeederService {
   /**
    * Itineraries
    */
-  async seedItinerary(): Promise<ApiResponseInterface> {
+  async seedItineraries(): Promise<ApiResponseInterface> {
+    try {
+      await this.itineraryRepository
+        .createQueryBuilder()
+        .insert()
+        .into(Itinerary)
+        .values(await itineraryData())
+        .execute();
+
+      return {
+        success: true,
+        message: 'All locations data was inserted into db',
+      };
+    } catch (error) {
+      if (error?.code === 'SQLITE_CONSTRAINT') {
+        throw new ConflictException('Conflict: Data already exists');
+      }
+      throw new NotImplementedException(error);
+    }
+  }
+
+  /**
+   * data from old json file imported into mongodb
+   */
+  async seedItineraryFromMongodb(): Promise<ApiResponseInterface> {
     try {
       const itineraries = await this.itineraryModel.find();
 

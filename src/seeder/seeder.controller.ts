@@ -21,6 +21,6 @@ export class SeederController {
    */
   @Post('/seed-itineraries')
   async seedItinerary(): Promise<any> {
-    return await this.seederService.seedItinerary();
+    return await this.seederService.seedItineraries();
   }
 }
