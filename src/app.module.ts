@@ -4,9 +4,9 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { ItineraryModule } from './itinerary/itinerary.module';
 import { LocationModule } from './location/location.module';
 import { SeederModule } from './seeder/seeder.module';
-import { ItineraryModule } from './itinerary/itinerary.module';
 
 @Module({
   imports: [

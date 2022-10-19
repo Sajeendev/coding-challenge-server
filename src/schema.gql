@@ -2,6 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Itinerary {
+  id: Int!
+  carrier: String!
+  departureLocation: String!
+  arrivalLocation: String!
+  departureDate: String!
+  arrivalDate: String!
+  price: Float!
+}
+
 type Location {
   id: Int!
   name: String!
@@ -9,4 +19,5 @@ type Location {
 
 type Query {
   locations: [Location!]!
+  itineraries: [Itinerary!]!
 }

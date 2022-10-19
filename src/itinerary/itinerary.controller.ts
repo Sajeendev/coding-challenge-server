@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Itinerary } from './itinerary.entity';
 import { ItineraryService } from './itinerary.service';
-import { ItineraryModel } from './schemas/itinerary.schema';
 
 @ApiTags('Itinerary')
 @Controller('itinerary')
@@ -12,7 +12,7 @@ export class ItineraryController {
    * Get all itineraries
    */
   @Get()
-  async getAllItinerary(): Promise<ItineraryModel[]> {
-    return await this.itineraryService.findAll();
+  async getAllItineraries(): Promise<Itinerary[]> {
+    return await this.itineraryService.getAllItineraries();
   }
 }

@@ -1,16 +1,13 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { ItineraryController } from './itinerary.controller';
+import { Itinerary } from './itinerary.entity';
 import { ItineraryService } from './itinerary.service';
-import { ItineraryModel, ItinerarySchema } from './schemas/itinerary.schema';
+import { ItineraryResolver } from './itinerary.resolver';
 
 @Module({
-  imports: [
-    MongooseModule.forFeature([
-      { name: ItineraryModel.name, schema: ItinerarySchema },
-    ]),
-  ],
-  providers: [ItineraryService],
+  imports: [TypeOrmModule.forFeature([Itinerary])],
+  providers: [ItineraryService, ItineraryResolver],
   controllers: [ItineraryController],
 })
 export class ItineraryModule {}

@@ -1,49 +1,23 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { format } from 'date-fns';
-import { Model } from 'mongoose';
-import { ItineraryDocument, ItineraryModel } from './schemas/itinerary.schema';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Itinerary } from './itinerary.entity';
 
 @Injectable()
 export class ItineraryService {
   constructor(
-    @InjectModel(ItineraryModel.name)
-    private itineraryModel: Model<ItineraryDocument>,
+    @InjectRepository(Itinerary)
+    private itineraryRepository: Repository<Itinerary>,
   ) {}
 
   /**
-   * Find all
+   * Get all itineraries
    */
-  async findAll(): Promise<ItineraryModel[]> {
-    const itineraries = await this.itineraryModel.find();
-
-    const data = [];
-    itineraries.map((itinerary) => {
-      const item = {
-        carrier: itinerary.carrier,
-        departureLocation: itinerary.departureLocation,
-        arrivalLocation: itinerary.arrivalLocation,
-        price: itinerary.price,
-        arrivalDate: format(
-          new Date(
-            itinerary.arrivalDate.year,
-            itinerary.arrivalDate.month,
-            itinerary.arrivalDate.dayOfMonth,
-          ),
-          'yyyy-MM-dd',
-        ),
-        departureDate: format(
-          new Date(
-            itinerary.departureDate.year,
-            itinerary.departureDate.month,
-            itinerary.departureDate.dayOfMonth,
-          ),
-          'yyyy-MM-dd',
-        ),
-      };
-      data.push(item);
-    });
-
-    return data;
+  async getAllItineraries(): Promise<Itinerary[]> {
+    try {
+      return await this.itineraryRepository.find();
+    } catch (error) {
+      throw new InternalServerErrorException('Something went wrong');
+    }
   }
 }

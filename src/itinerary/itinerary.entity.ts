@@ -28,13 +28,13 @@ export class Itinerary {
   @Field()
   arrivalLocation: string;
 
-  @Column({ type: 'date' })
+  @Column()
   @Field()
-  departureDate: Date;
+  departureDate: string;
 
-  @Column({ type: 'date' })
+  @Column()
   @Field()
-  arrivalDate: Date;
+  arrivalDate: string;
 
   @Column({ type: 'float' })
   @Field()
