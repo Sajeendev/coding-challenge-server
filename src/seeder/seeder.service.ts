@@ -19,6 +19,7 @@ export class SeederService {
   constructor(
     @InjectRepository(Location)
     private locationRepository: Repository<Location>,
+
     @InjectRepository(Itinerary)
     private itineraryRepository: Repository<Itinerary>,
 
@@ -57,7 +58,7 @@ export class SeederService {
     try {
       const itineraries = await this.itineraryModel.find();
 
-      const data = [];
+      const refactoredItineraries = [];
       itineraries.map((itinerary) => {
         const item = {
           carrier: itinerary.carrier,
@@ -81,20 +82,19 @@ export class SeederService {
             'yyyy-MM-dd',
           ),
         };
-        data.push(item);
+        refactoredItineraries.push(item);
       });
 
       await this.itineraryRepository
         .createQueryBuilder()
         .insert()
         .into(Itinerary)
-        .values(data)
+        .values(refactoredItineraries)
         .execute();
 
       return {
         success: true,
         message: 'All locations data was inserted into db',
-        meta: data,
       };
     } catch (error) {
       if (error?.code === 'SQLITE_CONSTRAINT') {

@@ -1,6 +1,6 @@
 import { Prop } from '@nestjs/mongoose';
 
-export class DateSchema {
+export class DateModel {
   @Prop()
   year: number;
   @Prop()

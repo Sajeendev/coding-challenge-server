@@ -2,19 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { format } from 'date-fns';
 import { Model } from 'mongoose';
-import { Itinerary, ItineraryDocument } from './schemas/itinerary.schema';
+import { ItineraryDocument, ItineraryModel } from './schemas/itinerary.schema';
 
 @Injectable()
 export class ItineraryService {
   constructor(
-    @InjectModel(Itinerary.name)
+    @InjectModel(ItineraryModel.name)
     private itineraryModel: Model<ItineraryDocument>,
   ) {}
 
   /**
    * Find all
    */
-  async findAll(): Promise<Itinerary[]> {
+  async findAll(): Promise<ItineraryModel[]> {
     const itineraries = await this.itineraryModel.find();
 
     const data = [];

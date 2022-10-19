@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { DateSchema } from './date.schema';
+import { DateModel } from './date.model';
 
-export type ItineraryDocument = Itinerary & Document;
+export type ItineraryDocument = ItineraryModel & Document;
 
 @Schema({ collection: 'itineraries' })
-export class Itinerary {
+export class ItineraryModel {
   @Prop()
   id: string;
 
@@ -22,10 +22,10 @@ export class Itinerary {
   price: number;
 
   @Prop()
-  arrivalDate: DateSchema;
+  arrivalDate: DateModel;
 
   @Prop()
-  departureDate: DateSchema;
+  departureDate: DateModel;
 }
 
-export const ItinerarySchema = SchemaFactory.createForClass(Itinerary);
+export const ItinerarySchema = SchemaFactory.createForClass(ItineraryModel);
