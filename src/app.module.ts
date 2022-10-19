@@ -4,6 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 import { LocationModule } from './location/location.module';
+import { SeederModule } from './seeder/seeder.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { LocationModule } from './location/location.module';
       synchronize: true,
     }),
     LocationModule,
+    SeederModule,
   ],
   controllers: [],
   providers: [],

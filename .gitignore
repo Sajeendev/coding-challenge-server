@@ -1,6 +1,11 @@
 # compiled output
 /dist
 /node_modules
+/documentation
+/docs
+
+# The file containing environment variables 
+.env*
 
 # Logs
 logs
@@ -28,8 +33,13 @@ lerna-debug.log*
 *.sublime-workspace
 
 # IDE - VSCode
-.vscode/*
+**/.vscode/
+**/.VSCodeCounter/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+*.code-workspace
+
+# Local History for Visual Studio Code
+.history/
