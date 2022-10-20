@@ -20,4 +20,5 @@ type Location {
 type Query {
   locations: [Location!]!
   itineraries: [Itinerary!]!
+  getItineraryById(id: Int!): Itinerary!
 }

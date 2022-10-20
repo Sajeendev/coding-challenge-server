@@ -13,6 +13,6 @@ export class LocationController {
    */
   @Get()
   async getLocations(): Promise<Location[]> {
-    return await this.locationService.findAll();
+    return await this.locationService.getAllLocations();
   }
 }

@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Itinerary } from './itinerary.entity';
 import { ItineraryService } from './itinerary.service';
@@ -14,5 +14,13 @@ export class ItineraryController {
   @Get()
   async getAllItineraries(): Promise<Itinerary[]> {
     return await this.itineraryService.getAllItineraries();
+  }
+
+  /**
+   * Get itinerary by id
+   */
+  @Get(':id')
+  async getItineraryById(@Param('id') id: number): Promise<Itinerary> {
+    return await this.itineraryService.getItineraryById(id);
   }
 }

@@ -11,6 +11,6 @@ export class LocationResolver {
    */
   @Query(() => [Location])
   async locations(): Promise<Location[]> {
-    return await this.locationService.findAll();
+    return await this.locationService.getAllLocations();
   }
 }
