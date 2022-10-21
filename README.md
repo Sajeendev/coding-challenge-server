@@ -5,10 +5,6 @@ Edreams Odigeo coding challenge.
 ## Installation
 
 ```bash
-# make sure you have installed nest cli, otherwise install it
-npm i -g @nestjs/cli
-
-
 # install dependencies
 $ npm install
 ```
