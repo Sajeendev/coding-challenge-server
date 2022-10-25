@@ -29,8 +29,8 @@ export const useSwagger = (app: any) => {
   };
 
   const config = new DocumentBuilder()
-    .setTitle('Edreams')
-    .setDescription('Api documentation - Coding challenge')
+    .setTitle('Api Docs')
+    .setDescription('Edreams - Coding challenge')
     .setVersion('1.0.0')
     .build();
 
