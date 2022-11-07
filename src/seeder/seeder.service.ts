@@ -1,7 +1,7 @@
 import {
   ConflictException,
   Injectable,
-  NotImplementedException,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -41,7 +41,7 @@ export class SeederService {
       if (error?.code === 'SQLITE_CONSTRAINT') {
         throw new ConflictException('Conflict: Data already exists');
       }
-      throw new NotImplementedException(error);
+      throw new InternalServerErrorException(error);
     }
   }
 
@@ -59,13 +59,13 @@ export class SeederService {
 
       return {
         success: true,
-        message: 'All locations data was inserted into db',
+        message: 'All itineraries data was inserted into db',
       };
     } catch (error) {
       if (error?.code === 'SQLITE_CONSTRAINT') {
         throw new ConflictException('Conflict: Data already exists');
       }
-      throw new NotImplementedException(error);
+      throw new InternalServerErrorException(error);
     }
   }
 }
